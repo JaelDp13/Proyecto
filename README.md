@@ -1,1 +1,5 @@
-# Proyecto
+Proyecto-Carro Autonomo
+
+Se realizara un Carro autonomo usando una Raspberry Pi que tenemos para hacer pruebas e inventos en la oficina, junto con varios componentes adicionales (cámara y sensores infrarrojos). Al tener instalado GNU/Linux (Raspbian) podré instalar librerías programables y el código que desarrolle / adapte para utilizar toda la información obtenida (imágenes, datos de sensores, etcétera), de forma muy sencilla, a la vez que podré utilizar las salidas que dispone (junto con algo más de electrónica adicional) para activar y controlar los servos de dirección y de aceleración del vehículo.
+
+Para obtener datos que pueda procesar, utilizaré una cámara (para procesar imágenes y saber por dónde va la carretera) que ya tiene integrados sensores infrarrojos (para detectar obstáculos frontalmente y evitar colisión), que es compatible con la Raspberry Pi.Usando una librería para realizar el procesado de imágenes de la cámara como OpenCV (que es abierta y cualquiera la puede utilizar), o librerías para generar redes neuronales como Tensorflow.
