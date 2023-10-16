@@ -7,16 +7,16 @@ GPIO.setup(8, GPIO.OUT)
 GPIO.setup(10, GPIO.OUT)
 
 for i in range(5):
-    # Gira el motor en un sentido durante 3 segundos
-    print "Girando motor en un sentido"
+    # Giro de motor por 5 segundos
+    print "Girando el motor"
     GPIO.output(8, GPIO.HIGH)
     GPIO.output(10, GPIO.LOW)
-    time.sleep(3)
+    time.sleep(5)
 
-    # Gira el motor en el otro sentido durante 3 segundos
-    print "Girando motor en sentido contrario"
+    # Gira de de motor en sentido contrario por 5 segundos
+    print "Gira el kotor en sentido contrario"
     GPIO.output(8, GPIO.LOW)
     GPIO.output(10, GPIO.HIGH)
-    time.sleep(3)
+    time.sleep(5)
 
 GPIO.cleanup()
