@@ -14,7 +14,7 @@ for i in range(5):
     time.sleep(5)
 
     # Gira de motor en sentido contrario por 5 segundos
-    print "Gira el kotor en sentido contrario"
+    print "Gira el motor en sentido contrario"
     GPIO.output(8, GPIO.LOW)
     GPIO.output(10, GPIO.HIGH)
     time.sleep(5)
