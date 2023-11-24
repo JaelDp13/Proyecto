@@ -1,76 +1,49 @@
 import RPi.GPIO as GPIO
-from time import sleep
-
-in1 = 24
-in2 = 23
-en = 25
-temp1 = 1
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(in1, GPIO.OUT)
-GPIO.setup(in2, GPIO.OUT)
-GPIO.setup(en, GPIO.OUT)
-GPIO.output(in1, GPIO.LOW)
-GPIO.output(in2, GPIO.LOW)
-p = GPIO.PWM(en, 1000)
-p.start(25)
-print("\n")
-print("La velocidad y direccion del Motor")
-print("C-Correr A-Alto Av-Avanzar R-Reversa L-Low M-Medium H-High E-Exit")
-print("\n")
-
-while (1):
-
-    x = raw_input()
-
-    if x == 'C':
-        print("Correr")
-        if (temp1 == 1):
-            GPIO.output(in1, GPIO.HIGH)
-            GPIO.output(in2, GPIO.LOW)
-            print("Av")
-            x = 'z'
-        else:
-            GPIO.output(in1, GPIO.LOW)
-            GPIO.output(in2, GPIO.HIGH)
-            print("Reversa")
-            x = 'z'
+import time
 
 
-    elif x == 'A':
-        print("Alto")
-        GPIO.output(in1, GPIO.LOW)
-        GPIO.output(in2, GPIO.LOW)
-        x = 'z'
+class MotorControl:
+    def _init_(self, ena, in1, in2):
+        self.ENA = ena
+        self.IN1 = in1
+        self.IN2 = in2
 
-    elif x == 'Av':
-        print("Avanzar")
-        GPIO.output(in1, GPIO.HIGH)
-        GPIO.output(in2, GPIO.LOW)
-        temp1 = 1
-        x = 'z'
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(self.ENA, GPIO.OUT)
+        GPIO.setup(self.IN1, GPIO.OUT)
+        GPIO.setup(self.IN2, GPIO.OUT)
+        self.pwm = GPIO.PWM(self.ENA, 100)
+        self.pwm.start(0)
 
-    elif x == 'R':
-        print("Reversa")
-        GPIO.output(in1, GPIO.LOW)
-        GPIO.output(in2, GPIO.HIGH)
-        temp1 = 0
-        x = 'z'
+    def forward(self, speed):
+        GPIO.output(self.IN1, GPIO.HIGH)
+        GPIO.output(self.IN2, GPIO.LOW)
+        self.pwm.ChangeDutyCycle(speed)
 
-    elif x == 'L':
-        print("Low")
-        p.ChangeDutyCycle(25)
-        x = 'z'
+    def backward(self, speed):
+        GPIO.output(self.IN1, GPIO.LOW)
+        GPIO.output(self.IN2, GPIO.HIGH)
+        self.pwm.ChangeDutyCycle(speed)
 
-    elif x == 'M':
-        print("Medium")
-        p.ChangeDutyCycle(50)
-        x = 'z'
+    def stop(self):
+        GPIO.output(self.IN1, GPIO.LOW)
+        GPIO.output(self.IN2, GPIO.LOW)
+        self.pwm.ChangeDutyCycle(0)
 
-    elif x == 'H':
-        print("High")
-        p.ChangeDutyCycle(75)
-        x = 'z'
 
-if __name__ == "__main__"
-  main()
+ENA = 18
+IN1 = 23
+IN2 = 24
+
+motor = MotorControl(ENA, IN1, IN2)
+
+try:
+    motor.forward(50)
+    time.sleep(2)
+    motor.backward(75)
+    time.sleep(2)
+    motor.stop()
+
+except KeyboardInterrupt:
+    motor.stop()
+    GPIO.cleanup()
