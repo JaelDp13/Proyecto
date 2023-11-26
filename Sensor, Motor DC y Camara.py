@@ -76,7 +76,7 @@ try:
     while True:
 
         ret, frame = cap.read()
-        cv2.imshow('Camera', frame)
+        cv2.imshow('Camara', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
