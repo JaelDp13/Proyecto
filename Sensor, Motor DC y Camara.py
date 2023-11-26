@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import cv2
 
 
 class MotorControl:
@@ -55,18 +56,29 @@ class UltrasonicSensor:
 
         return distance
 
+
+
 ENA = 18
 IN1 = 23
 IN2 = 24
 
+
 TRIG = 18
 ECHO = 24
+
 
 motor = MotorControl(ENA, IN1, IN2)
 ultrasonic_sensor = UltrasonicSensor(TRIG, ECHO)
 
+
 try:
     while True:
+
+        ret, frame = cap.read()
+        cv2.imshow('Camera', frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
         distance = ultrasonic_sensor.measure_distance()
         print(f"Distancia: {distance:.2f} cm")
 
@@ -74,7 +86,7 @@ try:
             motor.stop()
             print("Deteniendo motor...")
         else:
-            motor.forward(50)
+            motor.forward(50)  # Avanza a mitad de velocidad
             print("Avanzando...")
 
         time.sleep(1)
@@ -82,3 +94,5 @@ try:
 except KeyboardInterrupt:
     motor.stop()
     GPIO.cleanup()
+    cap.release()
+    cv2.destroyAllWindows()
