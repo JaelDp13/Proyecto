@@ -85,10 +85,10 @@ try:
 
         if distance <= 15:
             motor.stop()
-            print("Deteniendo motor...")
+            print("Deteniendo motor")
         else:
-            motor.forward(50)  # Avanza a mitad de velocidad
-            print("Avanzando...")
+            motor.forward(50)  
+            print("Avanzando")
 
         time.sleep(1)
 
